@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">NoteMe</string>
+    <string name="noteme">NoteMe</string>
+    <string name="task_name">Task Name:</string>
+    <string name="created_date">Created Date:</string>
+    <string name="deadline">Deadline:</string>
+    <string name="task_details">Task Details</string>
+    <string name="status">Status:</string>
+    <string name="description">Description:</string>
+    <string name="dummy_long_text">Task Full Description. Task Full Description. Task Full Description. Task Full Description. Task Full Description. </string>
 </resources>

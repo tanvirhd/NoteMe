@@ -10,7 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NoteMe">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.ActivityEditTaskScreen"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ActivityAddTaskScreen"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ActivityTaskDetailsScreen"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ActivityHomeScreen"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ActivitySplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,6 +30,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
