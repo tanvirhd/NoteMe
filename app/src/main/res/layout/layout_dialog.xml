@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:paddingRight="50dp"
+    android:paddingLeft="50dp"
+    android:background="@drawable/background_dialog">
+
+    <ImageView
+        android:id="@+id/ivDialogTopIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/icon_phone"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline7"
+        app:layout_constraintStart_toStartOf="@+id/guideline7"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/etDialogInputField"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginRight="8dp"
+        android:background="@color/ColorEBEBEB"
+        android:fontFamily="@font/amaranth_bold"
+        android:gravity="start|center"
+        android:paddingLeft="8dp"
+        android:hint="Enter Url"
+        android:padding="8dp"
+        android:textColor="@color/Color000000"
+        android:textColorHint="@color/Color7D7979"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivDialogTopIcon" />
+
+    <TextView
+        android:id="@+id/dialogSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:fontFamily="@font/amaranth"
+        android:gravity="center"
+        android:text="Save Phone"
+        android:textColor="@color/ColorFFFFFF"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textSize="16dp"
+        android:background="@color/Color94DB60"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/etDialogInputField"
+        app:layout_constraintStart_toStartOf="@+id/etDialogInputField"
+        app:layout_constraintTop_toBottomOf="@+id/etDialogInputField" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".50" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

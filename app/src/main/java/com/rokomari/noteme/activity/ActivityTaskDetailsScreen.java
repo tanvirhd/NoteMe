@@ -2,8 +2,10 @@ package com.rokomari.noteme.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.rokomari.noteme.databinding.ActivityTaskDetailsScreenBinding;
 import com.rokomari.noteme.model.ModelTask;
@@ -23,6 +25,15 @@ public class ActivityTaskDetailsScreen extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         init();
+
+        binding.btnEditTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent taskDetailsIntent=new Intent(ActivityTaskDetailsScreen.this,ActivityEditTaskScreen.class);
+                taskDetailsIntent.putExtra("parcel",taskDetails);
+                startActivity(taskDetailsIntent);
+            }
+        });
     }
 
     void init(){
@@ -46,6 +57,6 @@ public class ActivityTaskDetailsScreen extends AppCompatActivity {
         binding.tvTaskTitle.setText(task.getTaskName());
         binding.tvTaskDes.setText(task.getTaskDes());
         binding.tvTaskStatus.setText(taskProgressMap.get(task.getTaskStatus()));
-        Log.d(TAG, "updateUI: "+taskProgressMap.get(task.getTaskStatus()));
+        Log.d(TAG, "updateUI: "+task.id);
     }
 }
