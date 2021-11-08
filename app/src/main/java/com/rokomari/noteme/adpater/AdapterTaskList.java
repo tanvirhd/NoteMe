@@ -39,7 +39,7 @@ public class AdapterTaskList extends RecyclerView.Adapter<AdapterTaskList.Adapte
     public void onBindViewHolder(@NonNull AdapterTaskListViewHolder holder, int position) {
         ModelTask task=taskList.get(position);
         int index=position;
-        Log.d("adapter", "onBindViewHolder: "+task.id);
+
         holder.layoutTaskBinding.tvTaskName.setText(task.getTaskName());
         holder.layoutTaskBinding.tvCreatedDate.setText(task.getCreatedDate());
         holder.layoutTaskBinding.tvDeadline.setText(task.getDeadline());

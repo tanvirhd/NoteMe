@@ -1,5 +1,6 @@
 package com.rokomari.noteme.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -8,8 +9,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.material.navigation.NavigationBarView;
+import com.rokomari.noteme.R;
 import com.rokomari.noteme.adpater.AdapterTaskList;
 import com.rokomari.noteme.callback.AdapterTaskListCallbacks;
 import com.rokomari.noteme.databinding.ActivityHomeScreenBinding;
@@ -24,7 +28,9 @@ public class ActivityHomeScreen extends AppCompatActivity implements AdapterTask
     private ActivityHomeScreenBinding binding;
 
     private List<ModelTask> taskList;
+    private List<ModelTask> taskListDisplay;
     private AdapterTaskList adapterTaskList;
+    private int selectedTaskStatus;
 
     private ViewModelTask viewModelTask;
     @Override
@@ -34,18 +40,60 @@ public class ActivityHomeScreen extends AppCompatActivity implements AdapterTask
         setContentView(binding.getRoot());
         init();
 
-        binding.btnAddNewTask.setOnClickListener(new View.OnClickListener() {
+        binding.btnAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(ActivityHomeScreen.this,ActivityAddTaskScreen.class));
             }
         });
+
+        binding.bottomNavigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.menuOpen:
+                        selectedTaskStatus=1;
+                        taskListDisplay.clear();
+                        taskListDisplay.addAll(filterList(selectedTaskStatus,taskList));
+                        Log.d(TAG, "onNavigationItemSelected: size:"+taskListDisplay.size());
+                        adapterTaskList.notifyDataSetChanged();
+                        break;
+                    case R.id.menuInProgress:
+                        selectedTaskStatus=2;
+                        taskListDisplay.clear();
+                        taskListDisplay.addAll(filterList(selectedTaskStatus,taskList));
+                        Log.d(TAG, "onNavigationItemSelected: size:"+taskListDisplay.size());
+                        adapterTaskList.notifyDataSetChanged();
+                        break;
+                    case R.id.menuTest:
+                        selectedTaskStatus=3;
+                        taskListDisplay.clear();
+                        taskListDisplay.addAll(filterList(selectedTaskStatus,taskList));
+                        Log.d(TAG, "onNavigationItemSelected: size:"+taskListDisplay.size());
+                        adapterTaskList.notifyDataSetChanged();
+                        break;
+                    case R.id.menuDone:
+                        selectedTaskStatus=4;
+                        taskListDisplay.clear();
+                        taskListDisplay.addAll(filterList(selectedTaskStatus,taskList));
+                        Log.d(TAG, "onNavigationItemSelected: size:"+taskListDisplay.size());
+                        adapterTaskList.notifyDataSetChanged();
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     void init(){
+        binding.bottomNavigation.setItemIconTintList(null);
+        binding.bottomNavigation.setSelectedItemId(R.id.menuOpen);
+        selectedTaskStatus=1;
+
         taskList=new ArrayList<>();
+        taskListDisplay =new ArrayList<>();
         viewModelTask=new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(ViewModelTask.class);
-        adapterTaskList=new AdapterTaskList(ActivityHomeScreen.this,taskList,ActivityHomeScreen.this);
+        adapterTaskList=new AdapterTaskList(ActivityHomeScreen.this, taskListDisplay,ActivityHomeScreen.this);
 
         binding.recycTask.setAdapter(adapterTaskList);
         binding.recycTask.setLayoutManager(new LinearLayoutManager(ActivityHomeScreen.this));
@@ -59,27 +107,25 @@ public class ActivityHomeScreen extends AppCompatActivity implements AdapterTask
             @Override
             public void onChanged(List<ModelTask> modelTasks) {
                 taskList.clear();
+                taskListDisplay.clear();
                 taskList.addAll(modelTasks);
+                taskListDisplay.addAll(filterList(selectedTaskStatus,taskList));
                 adapterTaskList.notifyDataSetChanged();
             }
         });
     }
 
-    void createDummyData(){
-        taskList.add(new ModelTask("task 1","task 1 des","02-11-2021","02-11-2021",1));
-        taskList.add(new ModelTask("task 2","task 2 des","02-11-2021","02-11-2021",2));
-        taskList.add(new ModelTask("task 3","task 3 des","02-11-2021","02-11-2021",3));
-        taskList.add(new ModelTask("task 4","task 4 des","02-11-2021","02-11-2021",4));
-    }
-
     @Override
     public void onEditClicked(ModelTask task, int position) {
-        Log.d(TAG, "onEditClicked: clicked");
+        Intent taskDetailsIntent=new Intent(ActivityHomeScreen.this,ActivityEditTaskScreen.class);
+        taskDetailsIntent.putExtra("parcel",task);
+        startActivity(taskDetailsIntent);
     }
 
     @Override
     public void onDeleteClicked(ModelTask task, int position) {
-        Log.d(TAG, "onDeleteClicked: clicked");
+        viewModelTask.deleteTaskByTaskId(task.id);
+        viewModelTask.getAllTasks();
     }
 
     @Override
@@ -87,5 +133,13 @@ public class ActivityHomeScreen extends AppCompatActivity implements AdapterTask
         Intent taskDetailsIntent=new Intent(ActivityHomeScreen.this,ActivityTaskDetailsScreen.class);
         taskDetailsIntent.putExtra("parcel",task);
         startActivity(taskDetailsIntent);
+    }
+
+    List<ModelTask> filterList(int taskStatus,List<ModelTask> tasks){
+        List<ModelTask> tempTaskList=new ArrayList<>();
+        for(ModelTask task:tasks){
+            if(task.getTaskStatus()==taskStatus) tempTaskList.add(task);
+        }
+        return tempTaskList;
     }
 }

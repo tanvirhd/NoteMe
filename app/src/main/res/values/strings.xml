@@ -12,6 +12,8 @@
     <string name="submit">Submit</string>
     <string name="write_description">Write Description .........</string>
     <string name="edit_task">Edit Task</string>
+    <string name="open">Open</string>
+    <string name="task_saved_successfully">Task Saved Successfully</string>
 
     <string-array name="status_list">
         <item>Open</item>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuOpen"
+        android:enabled="true"
+        android:icon="@drawable/icon_open"
+
+        android:title="@string/open"/>
+
+    <item
+        android:id="@+id/menuInProgress"
+        android:enabled="true"
+        android:icon="@drawable/icon_inprogress"
+        android:title="In-progress"/>
+
+    <item
+        android:id="@+id/menuTest"
+        android:enabled="true"
+        android:icon="@drawable/icon_test"
+        android:title="Test"/>
+
+    <item
+        android:id="@+id/menuDone"
+        android:enabled="true"
+        android:icon="@drawable/icon_done"
+        android:title="Test"/>
+
+</menu>

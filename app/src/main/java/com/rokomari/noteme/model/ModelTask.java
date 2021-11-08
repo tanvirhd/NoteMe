@@ -92,24 +92,6 @@ public class ModelTask implements Parcelable {
         taskAttachmentUrl = in.readString();
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(taskName);
-        dest.writeString(taskDes);
-        dest.writeString(createdDate);
-        dest.writeString(deadline);
-        dest.writeInt(taskStatus);
-        dest.writeString(taskAttachmentEmail);
-        dest.writeString(taskAttachmentPhone);
-        dest.writeString(taskAttachmentUrl);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
     public static final Creator<ModelTask> CREATOR = new Creator<ModelTask>() {
         @Override
         public ModelTask createFromParcel(Parcel in) {
@@ -187,6 +169,21 @@ public class ModelTask implements Parcelable {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(taskName);
+        parcel.writeString(taskDes);
+        parcel.writeString(createdDate);
+        parcel.writeString(deadline);
+        parcel.writeInt(taskStatus);
+        parcel.writeString(taskAttachmentEmail);
+        parcel.writeString(taskAttachmentPhone);
+        parcel.writeString(taskAttachmentUrl);
+    }
 }

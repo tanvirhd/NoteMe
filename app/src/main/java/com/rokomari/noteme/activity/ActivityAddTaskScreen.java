@@ -31,12 +31,11 @@ public class ActivityAddTaskScreen extends AppCompatActivity implements DatePick
     private static final String TAG = "ActivityAddTaskScreen";
     private ActivityAddTaskScreenBinding binding;
 
-    private Map<String,Integer> taskStatusMap; //todo delete
-
     private ArrayAdapter<String> spinnerAdapter;
     private Dialog dialogSavePhone;
     private Dialog dialogSaveURL;
     private Dialog dialogSaveEmail;
+    private Dialog dialogTaskSaved;
 
     private String taskName="",taskDes="",taskDeadLine,taskCreateDate,taskEmail="",taskPhone="",taskURL="";
     private int taskStatus;
@@ -55,11 +54,9 @@ public class ActivityAddTaskScreen extends AppCompatActivity implements DatePick
         binding.containerEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: clicked");
                 dialogSaveEmail.show();
             }
         });
-
 
         binding.containerPhone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,23 +111,14 @@ public class ActivityAddTaskScreen extends AppCompatActivity implements DatePick
         getSupportActionBar().setTitle("");
 
         today =Calendar.getInstance();
-        //taskDeadLine=today.get(Calendar.DAY_OF_MONTH)+"."+today.get(Calendar.MONTH)+"."+today.get(Calendar.YEAR);
         taskDeadLine="00.00.0000";
         taskStatus=1;
         taskCreateDate=today.get(Calendar.DAY_OF_MONTH)+"."+today.get(Calendar.MONTH)+"."+today.get(Calendar.YEAR);
         viewModelTask=new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(ViewModelTask.class);
-        //initTaskStatusMap();
+
         initTaskStatusSpinner();
         initAllDialog();
 
-    }
-
-    void initTaskStatusMap(){
-        taskStatusMap=new HashMap<String,Integer>();
-        taskStatusMap.put("Open",1);
-        taskStatusMap.put("In-Progress",1);
-        taskStatusMap.put("Test",1);
-        taskStatusMap.put("Done",1);
     }
 
     void initTaskStatusSpinner(){
@@ -146,6 +134,7 @@ public class ActivityAddTaskScreen extends AppCompatActivity implements DatePick
          dialogSavePhone= createDialog(R.drawable.icon_phone,"Enter Phone","Save Phone","phone");
          dialogSaveEmail= createDialog(R.drawable.icon_email,"Enter Email","Save Email","email");
          dialogSaveURL= createDialog(R.drawable.icon_url,"Enter URL (http://example.com)","Save URL","url");
+         dialogTaskSaved= createTaskSavedDialog();
 
          binding.tvDeadline.setText(taskDeadLine);
          datePickerDialog= DatePickerDialog.newInstance(
@@ -197,7 +186,27 @@ public class ActivityAddTaskScreen extends AppCompatActivity implements DatePick
                         }
                         break;
                 }
+                dialog.dismiss();
+            }
+        });
 
+        return dialog;
+    }
+
+    Dialog createTaskSavedDialog(){
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.layout_dialog_saved);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        TextView submitButtonDialog=dialog.findViewById(R.id.dialogSubmit);
+
+        submitButtonDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                onBackPressed();
             }
         });
 
@@ -219,6 +228,7 @@ public class ActivityAddTaskScreen extends AppCompatActivity implements DatePick
                     new ModelTask(taskName, taskDes,
                             taskCreateDate, taskDeadLine,
                             taskStatus, taskEmail, taskPhone, taskURL));
+            dialogTaskSaved.show();
         }
     }
 }

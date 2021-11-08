@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ public class ActivityEditTaskScreen extends AppCompatActivity implements DatePic
     private Dialog dialogSavePhone;
     private Dialog dialogSaveURL;
     private Dialog dialogSaveEmail;
+    private Dialog dialogTaskSaved;
 
     private String taskName="",taskDes="",taskDeadLine,taskCreateDate,taskEmail="",taskPhone="",taskURL="";
     private int taskStatus;
@@ -54,11 +56,9 @@ public class ActivityEditTaskScreen extends AppCompatActivity implements DatePic
         binding.containerEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: clicked");
                 dialogSaveEmail.show();
             }
         });
-
 
         binding.containerPhone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,22 +102,6 @@ public class ActivityEditTaskScreen extends AppCompatActivity implements DatePic
         });
     }
 
-     void updateTask() {
-         Log.d(TAG, "updateTask: called");
-         taskDes=binding.etTaskDes.getText().toString();
-
-         if(taskDes.isEmpty() || taskDeadLine.equals("00.00.0000") || taskStatus==0){
-             showToast("Empty Field Found!!");
-         }else{
-             ModelTask updatedTask=new ModelTask(taskDetails.id,taskDetails.getTaskName(), taskDes,
-                     taskCreateDate, taskDeadLine,
-                     taskStatus, taskEmail, taskPhone, taskURL);
-             Log.d(TAG, "updateTask: "+updatedTask.getTaskName()+" "+updatedTask.getTaskDes()+" "+updatedTask.id+
-                     " "+updatedTask.getCreatedDate()+" "+updatedTask.getDeadline()+" "+updatedTask.getTaskStatus());
-             viewModelTask.updateTask(updatedTask);
-         }
-     }
-
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         taskDeadLine=dayOfMonth+"."+monthOfYear+"."+year;
@@ -128,18 +112,16 @@ public class ActivityEditTaskScreen extends AppCompatActivity implements DatePic
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setTitle("");
 
-        taskDetails=getIntent().getParcelableExtra("parcel");
-        if(taskDetails != null) updateUI(taskDetails);
-        Log.d(TAG, "init: "+taskDetails.id);
         today =Calendar.getInstance();
-        //taskDeadLine=today.get(Calendar.DAY_OF_MONTH)+"."+today.get(Calendar.MONTH)+"."+today.get(Calendar.YEAR);
-        taskDeadLine="00.00.0000";
-        taskStatus=1;
         taskCreateDate=today.get(Calendar.DAY_OF_MONTH)+"."+today.get(Calendar.MONTH)+"."+today.get(Calendar.YEAR);
         viewModelTask=new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(ViewModelTask.class);
-        //initTaskStatusMap();
+
         initTaskStatusSpinner();
         initAllDialog();
+
+        taskDetails=getIntent().getParcelableExtra("parcel");
+        if(taskDetails != null) updateUI(taskDetails);
+
     }
 
     void initTaskStatusSpinner(){
@@ -155,6 +137,7 @@ public class ActivityEditTaskScreen extends AppCompatActivity implements DatePic
         dialogSavePhone= createDialog(R.drawable.icon_phone,"Enter Phone","Save Phone","phone");
         dialogSaveEmail= createDialog(R.drawable.icon_email,"Enter Email","Save Email","email");
         dialogSaveURL= createDialog(R.drawable.icon_url,"Enter URL (http://example.com)","Save URL","url");
+        dialogTaskSaved= createTaskSavedDialog();
 
         binding.tvDeadline.setText(taskDeadLine);
         datePickerDialog= DatePickerDialog.newInstance(
@@ -184,7 +167,6 @@ public class ActivityEditTaskScreen extends AppCompatActivity implements DatePic
                     case "phone":
                         if(inputBoxDialog.getText().toString().length()==11){
                             taskPhone=inputBoxDialog.getText().toString();
-                            Log.d(TAG, "onClick: "+inputBoxDialog.getText().toString());
                         }else {
                             showToast("Invalid Phone Number");
                         }
@@ -192,7 +174,6 @@ public class ActivityEditTaskScreen extends AppCompatActivity implements DatePic
                     case "email":
                         if(inputBoxDialog.getText().toString().contains("@")){
                             taskEmail=inputBoxDialog.getText().toString();
-                            Log.d(TAG, "onClick: "+inputBoxDialog.getText().toString());
                         }else {
                             showToast("Invalid Email Address");
                         }
@@ -200,25 +181,67 @@ public class ActivityEditTaskScreen extends AppCompatActivity implements DatePic
                     case "url":
                         if(URLUtil.isValidUrl(inputBoxDialog.getText().toString())){
                             taskURL=inputBoxDialog.getText().toString();
-                            Log.d(TAG, "onClick: "+inputBoxDialog.getText().toString());
                         }else {
                             showToast("Invalid  URL");
                         }
                         break;
                 }
-
+                dialog.dismiss();
             }
         });
 
         return dialog;
     }
 
-    void  showToast(String message){
-        Toast.makeText(ActivityEditTaskScreen.this, message, Toast.LENGTH_SHORT).show();
+    Dialog createTaskSavedDialog(){
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.layout_dialog_saved);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        TextView submitButtonDialog=dialog.findViewById(R.id.dialogSubmit);
+
+        submitButtonDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                onBackPressed();
+            }
+        });
+
+        return dialog;
+    }
+
+    void  showToast(String message ){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     void updateUI(ModelTask taskDetails){
-        Log.d(TAG, "updateUI: called");
+
         binding.etTaskName.setText(taskDetails.getTaskName());
+        binding.etTaskDes.setText(taskDetails.getTaskDes());
+
+        taskDeadLine=taskDetails.getDeadline();
+        binding.tvDeadline.setText(taskDeadLine);
+
+        taskStatus=taskDetails.getTaskStatus()-1;
+        binding.spinnerTaskStatus.setSelection(taskStatus);
+    }
+
+    void updateTask() {
+        taskDes=binding.etTaskDes.getText().toString();
+        taskName=binding.etTaskName.getText().toString();
+
+        if(taskName.isEmpty() || taskDes.isEmpty() || taskDeadLine.equals("00.00.0000") || taskStatus==0){
+            showToast("Empty Field Found!!");
+        }else{
+            ModelTask updatedTask=new ModelTask(taskDetails.id,taskName, taskDes,
+                    taskCreateDate, taskDeadLine,
+                    taskStatus, taskEmail, taskPhone, taskURL);
+
+            viewModelTask.updateTask(updatedTask);
+            dialogTaskSaved.show();
+        }
     }
 }

@@ -23,6 +23,10 @@ public class ViewModelTask extends AndroidViewModel {
        repository.insertNewTask(task);
     }
 
+    public void deleteTaskByTaskId(int taskId){
+        repository.deleteTaskByTaskId(taskId);
+    }
+
     public LiveData<List<ModelTask>> getAllTasks() {
         return  repository.getAllTasks();
     }

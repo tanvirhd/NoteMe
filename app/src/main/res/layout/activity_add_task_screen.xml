@@ -28,229 +28,236 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:background="@color/ColorBackground">
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <EditText
-            android:id="@+id/etTaskName"
-            style="@style/EditText.custom"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="22dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginEnd="22dp"
-            android:background="@color/ColorEBEBEB"
-            android:fontFamily="@font/amaranth_bold"
-            android:hint="Task Name"
-            android:textCursorDrawable="@drawable/edittext_custom_cursor"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:textColor="@color/Color000000"
-            android:textColorHint="@color/Color7D7979"
-            android:textSize="24dp"
-            android:theme="@style/EditText.custom"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/ColorBackground">
 
-        <EditText
-            android:id="@+id/etTaskDes"
-            style="@style/EditText.custom"
-            android:layout_width="0dp"
-            android:layout_height="110dp"
-            android:layout_marginTop="15dp"
-            android:background="@color/ColorEBEBEB"
-            android:fontFamily="@font/amaranth_bold"
-            android:gravity="start"
-            android:hint="@string/write_description"
-            android:padding="8dp"
-            android:textCursorDrawable="@drawable/edittext_custom_cursor"
-            android:textColor="@color/Color000000"
-            android:textColorHint="@color/Color7D7979"
-            android:textSize="14dp"
-            android:theme="@style/EditText.custom"
-            app:layout_constraintEnd_toEndOf="@+id/etTaskName"
-            app:layout_constraintStart_toStartOf="@+id/etTaskName"
-            app:layout_constraintTop_toBottomOf="@+id/etTaskName" />
+            <EditText
+                android:id="@+id/etTaskName"
+                style="@style/EditText.custom"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="22dp"
+                android:background="@color/ColorEBEBEB"
+                android:fontFamily="@font/amaranth_bold"
+                android:hint="Task Name"
+                android:textCursorDrawable="@drawable/edittext_custom_cursor"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:textColor="@color/Color000000"
+                android:textColorHint="@color/Color7D7979"
+                android:textSize="24dp"
+                android:theme="@style/EditText.custom"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="17dp"
-            android:fontFamily="@font/amaranth_bold"
-            android:text="@string/deadline"
-            android:textColor="@color/Color000000"
-            android:textSize="14dp"
-            app:layout_constraintEnd_toEndOf="@+id/etTaskDes"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/etTaskDes"
-            app:layout_constraintTop_toBottomOf="@+id/etTaskDes" />
+            <EditText
+                android:id="@+id/etTaskDes"
+                style="@style/EditText.custom"
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/ColorEBEBEB"
+                android:fontFamily="@font/amaranth_bold"
+                android:gravity="start"
+                android:hint="@string/write_description"
+                android:padding="8dp"
+                android:textCursorDrawable="@drawable/edittext_custom_cursor"
+                android:textColor="@color/Color000000"
+                android:textColorHint="@color/Color7D7979"
+                android:textSize="14dp"
+                android:theme="@style/EditText.custom"
+                app:layout_constraintEnd_toEndOf="@+id/etTaskName"
+                app:layout_constraintStart_toStartOf="@+id/etTaskName"
+                app:layout_constraintTop_toBottomOf="@+id/etTaskName" />
 
-        <TextView
-            android:id="@+id/tvDeadline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="11dp"
-            android:text="00.00.0000"
-            app:layout_constraintBottom_toBottomOf="@+id/textView5"
-            app:layout_constraintEnd_toEndOf="@+id/etTaskDes"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/textView5"
-            app:layout_constraintTop_toTopOf="@+id/textView5" />
-
-
-        <ImageView
-            android:id="@+id/ivCalender"
-            android:layout_width="25dp"
-            android:layout_height="23dp"
-            android:layout_marginStart="15dp"
-            android:src="@drawable/icon_calander"
-            app:layout_constraintBottom_toBottomOf="@+id/tvDeadline"
-            app:layout_constraintEnd_toEndOf="@+id/etTaskDes"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/tvDeadline"
-            app:layout_constraintTop_toTopOf="@+id/tvDeadline" />
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/amaranth_bold"
-            android:text="@string/status"
-            android:textColor="@color/Color000000"
-            android:textSize="14dp"
-            app:layout_constraintEnd_toEndOf="@+id/etTaskDes"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/etTaskDes"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-        <RelativeLayout
-            android:id="@+id/spinnerContainer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/background_spinner"
-            app:layout_constraintBottom_toBottomOf="@+id/textView6"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/textView6"
-            app:layout_constraintTop_toTopOf="@+id/textView6">
-
-            <Spinner
-                android:id="@+id/spinnerTaskStatus"
+            <TextView
+                android:id="@+id/textView5"
                 android:layout_width="wrap_content"
-                android:layout_height="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:fontFamily="@font/amaranth_bold"
+                android:text="@string/deadline"
+                android:textColor="@color/Color000000"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="@+id/etTaskDes"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/etTaskDes"
+                app:layout_constraintTop_toBottomOf="@+id/etTaskDes" />
+
+            <TextView
+                android:id="@+id/tvDeadline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:text="00.00.0000"
+                app:layout_constraintBottom_toBottomOf="@+id/textView5"
+                app:layout_constraintEnd_toEndOf="@+id/etTaskDes"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/textView5"
+                app:layout_constraintTop_toTopOf="@+id/textView5" />
+
+
+            <ImageView
+                android:id="@+id/ivCalender"
+                android:layout_width="25dp"
+                android:layout_height="23dp"
+                android:layout_marginStart="15dp"
+                android:src="@drawable/icon_calander"
+                app:layout_constraintBottom_toBottomOf="@+id/tvDeadline"
+                app:layout_constraintEnd_toEndOf="@+id/etTaskDes"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/tvDeadline"
+                app:layout_constraintTop_toTopOf="@+id/tvDeadline" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/amaranth_bold"
+                android:text="@string/status"
+                android:textColor="@color/Color000000"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="@+id/etTaskDes"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/etTaskDes"
+                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+            <RelativeLayout
+                android:id="@+id/spinnerContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:backgroundTint="@color/Color000000"
-                android:paddingLeft="4dp"
-                android:paddingRight="4dp"
-                android:popupBackground="@drawable/background_spinner" />
-        </RelativeLayout>
+                android:background="@drawable/background_spinner"
+                app:layout_constraintBottom_toBottomOf="@+id/textView6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/textView6"
+                app:layout_constraintTop_toTopOf="@+id/textView6">
+
+                <Spinner
+                    android:id="@+id/spinnerTaskStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@color/Color000000"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:popupBackground="@drawable/background_spinner" />
+            </RelativeLayout>
 
 
-        <LinearLayout
-            android:id="@+id/containerEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/containerPhone"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerContainer"
-            app:layout_constraintVertical_bias="0.0">
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="28dp"
-                android:layout_height="29dp"
-                android:src="@drawable/icon_email" />
-
-            <TextView
-                android:id="@+id/textViewEmail"
+            <LinearLayout
+                android:id="@+id/containerEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/amaranth_bold"
-                android:text="E-mail"
-                android:textColor="@color/Color000000"
-                android:textSize="14dp" />
-        </LinearLayout>
+                android:layout_marginTop="70dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/containerPhone"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerContainer"
+                app:layout_constraintVertical_bias="0.0">
 
-        <LinearLayout
-            android:id="@+id/containerPhone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="@+id/containerEmail"
-            app:layout_constraintEnd_toStartOf="@+id/containerUrl"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/containerEmail"
-            app:layout_constraintTop_toTopOf="@+id/containerEmail">
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="28dp"
+                    android:layout_height="29dp"
+                    android:src="@drawable/icon_email" />
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="28dp"
-                android:layout_height="29dp"
-                android:src="@drawable/icon_phone" />
+                <TextView
+                    android:id="@+id/textViewEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/amaranth_bold"
+                    android:text="E-mail"
+                    android:textColor="@color/Color000000"
+                    android:textSize="14dp" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textViewPhone"
+            <LinearLayout
+                android:id="@+id/containerPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/amaranth_bold"
-                android:text="Phone"
-                android:textColor="@color/Color000000"
-                android:textSize="14dp" />
-        </LinearLayout>
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/containerEmail"
+                app:layout_constraintEnd_toStartOf="@+id/containerUrl"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/containerEmail"
+                app:layout_constraintTop_toTopOf="@+id/containerEmail">
 
-        <LinearLayout
-            android:id="@+id/containerUrl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="@+id/containerPhone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/containerPhone"
-            app:layout_constraintTop_toTopOf="@+id/containerPhone">
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="28dp"
+                    android:layout_height="29dp"
+                    android:src="@drawable/icon_phone" />
 
-            <ImageView
-                android:layout_width="28dp"
-                android:layout_height="29dp"
-                android:src="@drawable/icon_url" />
+                <TextView
+                    android:id="@+id/textViewPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/amaranth_bold"
+                    android:text="Phone"
+                    android:textColor="@color/Color000000"
+                    android:textSize="14dp" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textViewURL"
+            <LinearLayout
+                android:id="@+id/containerUrl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/amaranth_bold"
-                android:text="URL"
-                android:textColor="@color/Color000000"
-                android:textSize="14dp" />
-        </LinearLayout>
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/containerPhone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/containerPhone"
+                app:layout_constraintTop_toTopOf="@+id/containerPhone">
 
-        <TextView
-            android:id="@+id/btnSubmit"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:background="@color/ColorED6415"
-            android:fontFamily="@font/amaranth"
-            android:gravity="center"
-            android:text="@string/submit"
-            android:textColor="@color/ColorFFFFFF"
-            android:textSize="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/etTaskDes"
-            app:layout_constraintStart_toStartOf="@+id/etTaskDes"
-            app:layout_constraintTop_toBottomOf="@+id/containerEmail" />
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="29dp"
+                    android:src="@drawable/icon_url" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/textViewURL"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/amaranth_bold"
+                    android:text="URL"
+                    android:textColor="@color/Color000000"
+                    android:textSize="14dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/btnSubmit"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:background="@color/ColorED6415"
+                android:fontFamily="@font/amaranth"
+                android:gravity="center"
+                android:text="@string/submit"
+                android:textColor="@color/ColorFFFFFF"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/etTaskDes"
+                app:layout_constraintStart_toStartOf="@+id/etTaskDes"
+                app:layout_constraintTop_toBottomOf="@+id/containerEmail" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
